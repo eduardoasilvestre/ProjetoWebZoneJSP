@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+
+<struts-config>
+    <form-beans>
+        <form-bean name="ConfirmarProgramaActionForm" type="com.myapp.struts.ConfirmarProgramaActionForm"/>
+        <form-bean name="BackToHomeActionForm" type="com.myapp.struts.BackToHomeActionForm"/>
+        <form-bean name="AindaNaoECadastradoActionForm" type="com.myapp.struts.AindaNaoECadastradoActionForm"/>
+        <form-bean name="LoginActionForm" type="com.myapp.struts.LoginActionForm"/>
+        <form-bean name="GPLogandoActionForm" type="com.myapp.struts.GPLogandoActionForm"/>
+        <form-bean name="CadastrandoActionForm" type="com.myapp.struts.CadastrandoActionForm"/>
+    </form-beans>
+    
+    <global-exceptions>
+        
+    </global-exceptions>
+    
+    <global-forwards>
+        <forward name="welcome" path="/Welcome.do"/>
+    </global-forwards>
+    
+    <!--
+    tag <Action>
+        name: nome do formulario
+        type: nome completo da classe Action
+        path: URI que sera mapeada para Action(sem *.do)
+        input: tela que sera acionada caso ocorra um erro na validação do formulario
+        scope: scope Web(page, request, request, aplication)
+        validation: se true, o formulario sera validado pelo6 mecanismo de validação
+                    se false, não será utilizado pelo mecanismo de validação
+    tag <forward> (redirecionamento)
+        name: label de retorno que identifica o forward
+        path: caminho para encontrar a página de resposta
+        redirect: se true, sera gerada uma resposta sendDirect ao usuário
+                  se false, sera utilizado o mecanismo de forward para o redirecionamento
+    -->
+    
+    <action-mappings>
+        <action input="/LoginForm.jsp" name="LoginActionForm" path="/login" scope="request" type="com.myapp.struts.LoginAction">
+            <forward name="sucesso" path="/LoginSucesso.jsp"/>
+            <forward name="errorlogin" path="/LoginErro.jsp"/>
+        </action>
+        
+        <action input="/LoginForm.jsp" name="AindaNaoECadastradoActionForm" path="/aindanaoecadastrado" scope="request" type="com.myapp.struts.AindaNaoECadastradoAction">
+            <forward name="cadastroprox" path="/CadastroSucesso.jsp" />
+        </action>
+        
+        <action input="/LoginForm.jsp" name="GPLogandoActionForm" path="/gplogin" scope="request" type="com.myapp.struts.GPLogandoAction">
+            <forward name="acompanhantesucesso" path="/AcompanhanteSucesso.jsp"/>
+            <forward name="errorgirl" path="/LoginErro.jsp"/>
+            <forward name="semprogramas" path="/SemProgramasAgenda.jsp"/>
+        </action>
+        
+        <action name="CadastrandoActionForm" path="/cadastrando" scope="request" type="com.myapp.struts.CadastrandoAction">
+            <forward name="cadastraragora"  path="/DadosGravadosCorretamente.jsp"/>
+        </action>
+        
+        <action name="BackToHomeActionForm" path="/backToHome" scope="request" type="com.myapp.struts.BackToHomeAction">
+            <forward name="voltando" path="/LoginForm.jsp"/>
+        </action>
+
+        <!-- O ActionForm BackToHomeActionForm nao faz nada por isso mapeia esses botões que nao
+             precisam de validação-->
+        <action input="/LoginSucesso.jsp" name="BackToHomeActionForm" path="/listgirls" scope="request" type="com.myapp.struts.ListGirlsServicesAction">
+            <forward name="show" path="/ListandoGarotas.jsp"/>
+        </action>
+        
+        
+        <!--listando garotas voltar ao menu anterior-->
+        <action name="BackToHomeActionForm" path="/back" scope="request" type="com.myapp.struts.BackToHomeAction">
+            <forward name="voltando" path="/LoginSucesso.jsp"/>
+        </action>
+        
+        <!--listando servicos-->
+        <action input="/LoginSucesso.jsp" name="BackToHomeActionForm" path="/listservices" scope="request" type="com.myapp.struts.ListGirlsServicesAction">
+            <forward name="show" path="/ListandoServicos.jsp"/>
+        </action>
+        
+        <!--listando serviços voltar ao menu anterior-->
+        <action name="BackToHomeActionForm" path="/backservices" scope="request" type="com.myapp.struts.BackToHomeAction">
+            <forward name="voltando" path="/LoginSucesso.jsp"/>
+        </action>
+        
+        <!--mostrando a tela onde se agenda um programa-->
+        <action  name="BackToHomeActionForm" path="/agendarprograma" scope="request" type="com.myapp.struts.AgendarProgramaAction">
+            <forward name="screen" path="/AgendarPrograma.jsp"/>
+        </action>
+        
+        <!--agendar um programa-->
+        <action input="/AgendarPrograma.jsp" name="ConfirmarProgramaActionForm" path="/saveprogam" scope="request" type="com.myapp.struts.ConfirmarProgramaAction">
+            <forward name="confirm" path="/ProgramaConfirmado.jsp"/>
+        </action>
+        
+        <action name="BackToHomeActionForm" path="/backmenu" scope="request" type="com.myapp.struts.BackToHomeAction">
+            <forward name="voltando" path="/LoginSucesso.jsp"/>
+        </action>
+        
+        <!--voltar do programa confirmado ao menu de opcoes-->
+        <action name="BackToHomeActionForm" path="/backoption" scope="request" type="com.myapp.struts.BackToHomeAction">
+            <forward name="voltando" path="/LoginSucesso.jsp"/>
+        </action>
+        
+        <!--voltando ao inicio do programa-->
+        <action name="BackToHomeActionForm" path="/backinicio" scope="request" type="com.myapp.struts.BackToHomeAction">
+            <forward name="voltando" path="/LoginForm.jsp"/>
+        </action>
+        
+        <!--do menu de opcoes ao inicio-->
+        <action name="BackToHomeActionForm" path="/inicio" scope="request" type="com.myapp.struts.BackToHomeAction">
+            <forward name="voltando" path="/LoginForm.jsp"/>
+        </action>
+        
+        <!--para gp deslogar-se-->
+        <action name="BackToHomeActionForm" path="/gpback" scope="request" type="com.myapp.struts.BackToHomeAction">
+            <forward name="voltando" path="/LoginForm.jsp"/>
+        </action>
+        
+        
+        
+        
+        
+        <action path="/Welcome" forward="/welcomeStruts.jsp"/>
+    </action-mappings>
+    
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+    
+    <message-resources parameter="com/myapp/struts/ApplicationResource"/>    
+    
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />      
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+            property="pathnames"
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+    
+</struts-config>
